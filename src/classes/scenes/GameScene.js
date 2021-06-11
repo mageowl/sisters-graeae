@@ -1,6 +1,8 @@
 import Sister from "../objects/Sister.js";
 
 export default class GameScene extends Phaser.Scene {
+	updates = [];
+
 	constructor() {
 		super("game");
 	}
@@ -20,5 +22,9 @@ export default class GameScene extends Phaser.Scene {
 			x: 100,
 			y: 100
 		});
+	}
+
+	update() {
+		this.updates.forEach((o) => o.update());
 	}
 }
