@@ -12,6 +12,8 @@ export default class Sister extends Phaser.Physics.Arcade.Sprite {
 		config.scene.physics.add.existing(this);
 
 		this.keys = config.scene.input.keyboard.addKeys("wasd");
+
+		this.setScale(5);
 	}
 
 	update() {
