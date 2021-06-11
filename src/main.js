@@ -2,9 +2,8 @@ import GameScene from "./classes/scenes/GameScene.js";
 
 const game = new Phaser.Game({
 	type: Phaser.AUTO,
-	scale: {
-		mode: Phaser.Scale.RESIZE
-	},
+	width: 800,
+	height: 496,
 	physics: {
 		default: "arcade"
 	},
