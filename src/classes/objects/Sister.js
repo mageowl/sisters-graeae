@@ -14,6 +14,7 @@ export default class Sister extends Phaser.Physics.Arcade.Sprite {
 	keys;
 	switchEyeNxt = false;
 	anger = 0;
+	direction = 0;
 
 	/**
 	 * Creates an instance of Sister.
@@ -66,7 +67,22 @@ export default class Sister extends Phaser.Physics.Arcade.Sprite {
 			if (this.anger > 0) {
 				this.anger--;
 			}
-		} else if (this.anger < Sister.PATIENTICE) this.anger++;
+		} else if (this.anger < Sister.PATIENTICE) {
+			this.anger++;
+			this.direction +=
+				Math.random() > 0.99 ? Math.floor(Math.random() * 11) - 5 : 0;
+			this.setVelocity(
+				Math.sin(this.direction) * (Sister.SPEED / 10),
+				Math.cos(this.direction) * (Sister.SPEED / 10)
+			);
+		} else {
+			this.direction +=
+				Math.random() > 0.99 ? Math.floor(Math.random() * 11) - 5 : 0;
+			this.setVelocity(
+				Math.sin(this.direction) * (Sister.SPEED / 10),
+				Math.cos(this.direction) * (Sister.SPEED / 10)
+			);
+		}
 
 		this.setFrame(hasEye ? 0 : this.anger === Sister.PATIENTICE ? 2 : 1);
 	}

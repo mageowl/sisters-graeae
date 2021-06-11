@@ -3,7 +3,7 @@ import GameScene from "./classes/scenes/GameScene.js";
 const game = new Phaser.Game({
 	type: Phaser.AUTO,
 	width: 800,
-	height: 496,
+	height: 480,
 	physics: {
 		default: "arcade"
 	},
