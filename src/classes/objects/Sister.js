@@ -1,5 +1,7 @@
 export default class Sister extends Phaser.Physics.Arcade.Sprite {
 	static SPEED = 200;
+	static PATIENTICE = 500;
+
 	static eye = 0;
 	static count = 0;
 	static instances = [];
@@ -60,9 +62,13 @@ export default class Sister extends Phaser.Physics.Arcade.Sprite {
 				this.switchEyeNxt = false;
 				this.setVelocity(0);
 			}
-		} else this.anger++;
 
-		this.setFrame(hasEye ? 0 : this.anger > 1000 ? 2 : 1);
+			if (this.anger > 0) {
+				this.anger--;
+			}
+		} else if (this.anger < Sister.PATIENTICE) this.anger++;
+
+		this.setFrame(hasEye ? 0 : this.anger === Sister.PATIENTICE ? 2 : 1);
 	}
 
 	switchEye = (e) => {
