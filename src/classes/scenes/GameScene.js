@@ -20,7 +20,22 @@ export default class GameScene extends Phaser.Scene {
 		new Sister({
 			scene: this,
 			x: 100,
-			y: 100
+			y: 100,
+			eye: false
+		});
+
+		new Sister({
+			scene: this,
+			x: 300,
+			y: 300,
+			eye: false
+		});
+
+		new Sister({
+			scene: this,
+			x: 400,
+			y: 400,
+			eye: true
 		});
 	}
 
