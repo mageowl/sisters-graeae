@@ -79,8 +79,8 @@ export default class Sister extends Phaser.Physics.Arcade.Sprite {
 			this.direction +=
 				Math.random() > 0.99 ? Math.floor(Math.random() * 11) - 5 : 0;
 			this.setVelocity(
-				Math.sin(this.direction) * (Sister.SPEED / 10),
-				Math.cos(this.direction) * (Sister.SPEED / 10)
+				Math.sin(this.direction) * Sister.SPEED,
+				Math.cos(this.direction) * Sister.SPEED
 			);
 		}
 
