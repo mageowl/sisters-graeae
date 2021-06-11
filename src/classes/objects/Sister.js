@@ -65,7 +65,7 @@ export default class Sister extends Phaser.Physics.Arcade.Sprite {
 			}
 
 			if (this.anger > 0) {
-				this.anger--;
+				this.anger -= 10;
 			}
 		} else if (this.anger < Sister.PATIENTICE) {
 			this.anger++;
