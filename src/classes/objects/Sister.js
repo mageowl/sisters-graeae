@@ -1,4 +1,4 @@
-export default class Sister extends Phaser.Physics.Arcade.Sprite {
+export default class Sister extends Phaser.GameObjects.Container {
 	static SPEED = 200;
 	static PATIENTICE = 500;
 
@@ -15,6 +15,22 @@ export default class Sister extends Phaser.Physics.Arcade.Sprite {
 	switchEyeNxt = false;
 	anger = 0;
 	direction = 0;
+	patientice = Sister.PATIENTICE;
+
+	/**
+	 * @type {Phaser.Physics.Arcade.Body}
+	 *
+	 * @memberof Sister
+	 */
+	body = null;
+
+	obj = {
+		/** @type {Phaser.GameObjects.Sprite} */
+		sprite: null,
+		/** @type {Phaser.GameObjects.Rectangle} */
+		patienticeBar: null,
+		light: null
+	};
 
 	/**
 	 * Creates an instance of Sister.
@@ -23,18 +39,30 @@ export default class Sister extends Phaser.Physics.Arcade.Sprite {
 	 * @memberof Sister
 	 */
 	constructor(config) {
-		super(config.scene, config.x, config.y, "sister");
+		const light = config.scene.lights.addLight(0, 0, 75).setVisible(false);
+		const sprite = config.scene.add.sprite(0, 0, "sister");
+		const bar = config.scene.add
+			.rectangle(0, -6, 8, 1, 0xffffff)
+			.setOrigin(0.5);
+		const patientice = config.scene.add
+			.rectangle(-4, -6, 8, 1, 0xff0000)
+			.setOrigin(0, 0.5);
+
+		super(config.scene, config.x, config.y, [sprite, bar, patientice]);
 
 		config.scene.add.existing(this);
-		config.scene.physics.add.existing(this);
+		config.scene.physics.world.enableBody(this);
 		config.scene.updates.push(this);
 		Sister.instances.push(this);
 
-		this.keys = config.scene.input.keyboard.addKeys("W,A,S,D");
-		this.id = Sister.count++;
-		config.scene.input.on("pointerdown", this.switchEye);
+		this.obj.sprite = sprite;
+		this.obj.patienticeBar = patientice;
 
-		this.setScale(5);
+		this.keys = config.scene.input.keyboard.addKeys("W,A,S,D,space");
+		this.id = Sister.count++;
+		this.keys.space.on("down", this.switchEye);
+
+		this.setScale(4).setPipeline("Light2D");
 	}
 
 	update() {
@@ -44,7 +72,7 @@ export default class Sister extends Phaser.Physics.Arcade.Sprite {
 		const hasEye = Sister.eye === this.id;
 
 		if (hasEye) {
-			this.setVelocity(
+			this.body.setVelocity(
 				(input.D + -input.A) * Sister.SPEED,
 				(input.S + -input.W) * Sister.SPEED
 			);
@@ -61,30 +89,32 @@ export default class Sister extends Phaser.Physics.Arcade.Sprite {
 				});
 				Sister.eye = closestID;
 				this.switchEyeNxt = false;
-				this.setVelocity(0);
 			}
 
 			if (this.anger > 0) {
 				this.anger -= 10;
 			}
-		} else if (this.anger < Sister.PATIENTICE) {
+		} else if (this.anger < this.patientice) {
 			this.anger++;
 			this.direction +=
 				Math.random() > 0.99 ? Math.floor(Math.random() * 11) - 5 : 0;
-			this.setVelocity(
+			this.body.setVelocity(
 				Math.sin(this.direction) * (Sister.SPEED / 10),
 				Math.cos(this.direction) * (Sister.SPEED / 10)
 			);
 		} else {
 			this.direction +=
 				Math.random() > 0.99 ? Math.floor(Math.random() * 11) - 5 : 0;
-			this.setVelocity(
+			this.body.setVelocity(
 				Math.sin(this.direction) * Sister.SPEED,
 				Math.cos(this.direction) * Sister.SPEED
 			);
 		}
 
-		this.setFrame(hasEye ? 0 : this.anger === Sister.PATIENTICE ? 2 : 1);
+		this.obj.sprite.setFrame(
+			hasEye ? 0 : this.anger === this.patientice ? 3 : 2
+		);
+		this.obj.patienticeBar.width = (8 / this.patientice) * this.anger;
 	}
 
 	switchEye = (e) => {

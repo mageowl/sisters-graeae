@@ -42,6 +42,7 @@ export default class GameScene extends Phaser.Scene {
 				y: 400
 			})
 		]);
+		this.lights.enable().setAmbientColor(0x8f8f8f);
 	}
 
 	update() {
