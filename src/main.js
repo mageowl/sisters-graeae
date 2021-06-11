@@ -11,5 +11,14 @@ const game = new Phaser.Game({
 	render: {
 		pixelArt: true
 	},
-	scene: GameScene
+	scene: GameScene,
+	plugins: {
+		scene: [
+			{
+				key: "PhaserRaycaster",
+				plugin: PhaserRaycaster,
+				mapping: "raycasterPlugin"
+			}
+		]
+	}
 });
