@@ -1,4 +1,4 @@
-class Sister extends Phaser.Physics.Arcade.Sprite {
+export default class Sister extends Phaser.Physics.Arcade.Sprite {
 	/**
 	 * Creates an instance of Sister.
 	 * @param {object} config
