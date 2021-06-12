@@ -9,7 +9,8 @@ const game = new Phaser.Game({
 		default: "arcade"
 	},
 	render: {
-		pixelArt: true
+		pixelArt: true,
+		antialias: false
 	},
 	scene: GameScene,
 	plugins: {
