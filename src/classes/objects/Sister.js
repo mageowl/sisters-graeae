@@ -56,7 +56,9 @@ export default class Sister extends Phaser.GameObjects.Container {
 	 */
 	constructor(config) {
 		const light = config.scene.lights.addLight(0, 0, 50, 0xffffff, 1.1);
-		const sprite = config.scene.add.sprite(0, 0, "sister");
+		const sprite = config.scene.add
+			.sprite(0, 0, "sister")
+			.setPipeline("Light2D");
 		const bar = config.scene.add
 			.rectangle(0, -6, 8, 1, [0x3245bf, 0xab492e, 0x2a6339][Sister.count])
 			.setOrigin(0.5);
@@ -95,8 +97,6 @@ export default class Sister extends Phaser.GameObjects.Container {
 		this.id = Sister.count++;
 		this.keys.space.on("down", this.switchEye);
 		config.scene.input.on("pointerdown", this.kick);
-
-		this.obj.sprite.setPipeline("Light2D");
 	}
 
 	update() {
@@ -129,11 +129,6 @@ export default class Sister extends Phaser.GameObjects.Container {
 				});
 				if (closest < 40) Sister.eye = closestID;
 				this.switchEyeNxt = false;
-			}
-
-			if (this.kicking) {
-				this.kicking--;
-				this.obj.sprite.setFlip(this.scene.input.mousePointer.worldX < this.x);
 			}
 
 			if (input.E) {
@@ -186,6 +181,11 @@ export default class Sister extends Phaser.GameObjects.Container {
 				Math.cos(this.wanderDirection) * Sister.SPEED,
 				Math.sin(this.wanderDirection) * Sister.SPEED
 			);
+		}
+
+		if (this.kicking) {
+			this.kicking--;
+			this.obj.sprite.setFlip(this.scene.input.mousePointer.worldX < this.x);
 		}
 
 		this.obj.sprite.setFrame(

@@ -1,6 +1,7 @@
 import { getProperty } from "../../util.js";
 import Door from "../objects/Door.js";
 import Sister from "../objects/Sister.js";
+import Spider from "../objects/Spider.js";
 
 export default class GameScene extends Phaser.Scene {
 	updates = [];
@@ -10,6 +11,13 @@ export default class GameScene extends Phaser.Scene {
 	 * @memberof GameScene
 	 */
 	container;
+
+	sounds = {
+		random: [],
+		lowPatientice: [],
+		spiders: [],
+		roomEnter: []
+	};
 
 	constructor() {
 		super("game");
@@ -22,12 +30,17 @@ export default class GameScene extends Phaser.Scene {
 		});
 		this.load.image("bubble", "sprites/bubble.png");
 		this.load.image("step", "sprites/step.png");
+		this.load.image("spider", "sprites/spider.png");
 
 		this.load.tilemapTiledJSON("map", "tilemaps/map.json");
 		this.load.image("tileset", "sprites/tileset.png");
+
+		this.load.audio("toot", ["sounds/toot.m4a"]);
 	}
 
 	create() {
+		this.sounds.random.push(this.sound.add("toot"));
+
 		const map = this.add.tilemap("map", 8, 8);
 		map.addTilesetImage("tileset", "tileset");
 		this.level = map.createLayer("map", "tileset");
@@ -60,9 +73,19 @@ export default class GameScene extends Phaser.Scene {
 				case "door":
 					objs[id] = new Door({
 						scene: this,
-						x: x + 4,
-						y: y + 4
+						x,
+						y
 					});
+					break;
+
+				case "spider":
+					this.container.add(
+						new Spider({
+							scene: this,
+							x,
+							y
+						})
+					);
 					break;
 
 				default:
@@ -74,7 +97,7 @@ export default class GameScene extends Phaser.Scene {
 			.getObjectLayer("objects")
 			.objects.forEach(({ type, properties, id }) => {
 				switch (type) {
-					case "door":
+					case "door": {
 						if (getProperty(properties, "exit")) {
 							objs[id].exit = objs[getProperty(properties, "exit")];
 						} else {
@@ -97,6 +120,7 @@ export default class GameScene extends Phaser.Scene {
 							}
 						}
 						break;
+					}
 
 					default:
 						break;

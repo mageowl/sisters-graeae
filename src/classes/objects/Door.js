@@ -15,7 +15,7 @@ export default class Door extends Phaser.Physics.Arcade.Image {
 	 * @memberof Sister
 	 */
 	constructor(config) {
-		super(config.scene, config.x, config.y);
+		super(config.scene, config.x + 4, config.y + 4);
 
 		config.scene.add.existing(this);
 		config.scene.physics.add.existing(this, true);
