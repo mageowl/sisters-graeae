@@ -16,8 +16,6 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	preload() {
-		this.load.setBaseURL("../../../assets");
-
 		this.load.spritesheet("sister", "sprites/sister.png", {
 			frameWidth: 8,
 			frameHeight: 8

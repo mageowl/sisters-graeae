@@ -27,7 +27,6 @@ export default class Sister extends Phaser.GameObjects.Container {
 	patientice = Sister.PATIENTICE;
 	kicking = 0;
 	speedBoost = 3;
-	inDoor = false;
 
 	/**
 	 * @type {Phaser.Physics.Arcade.Body}
@@ -187,10 +186,6 @@ export default class Sister extends Phaser.GameObjects.Container {
 				Math.cos(this.wanderDirection) * Sister.SPEED,
 				Math.sin(this.wanderDirection) * Sister.SPEED
 			);
-		}
-
-		if (this.body.touching.none && !this.body.embedded) {
-			this.inDoor = false;
 		}
 
 		this.obj.sprite.setFrame(

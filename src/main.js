@@ -1,4 +1,5 @@
 import GameScene from "./classes/scenes/GameScene.js";
+import MenuScene from "./classes/scenes/MenuScene.js";
 
 const game = new Phaser.Game({
 	type: Phaser.AUTO,
@@ -15,14 +16,8 @@ const game = new Phaser.Game({
 		pixelArt: true,
 		antialias: false
 	},
-	scene: GameScene,
-	plugins: {
-		scene: [
-			{
-				key: "PhaserRaycaster",
-				plugin: PhaserRaycaster,
-				mapping: "raycasterPlugin"
-			}
-		]
-	}
+	loader: {
+		baseURL: "../../../assets"
+	},
+	scene: [MenuScene, GameScene]
 });

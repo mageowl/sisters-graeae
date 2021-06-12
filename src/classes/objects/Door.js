@@ -32,12 +32,11 @@ export default class Door extends Phaser.Physics.Arcade.Image {
 	 * @memberof Door
 	 */
 	teleport = (obj) => {
-		if (this.exit && !obj.inDoor) {
+		if (this.exit) {
 			obj.setPosition(
 				this.exit.x + obj.body.velocity.x / 4,
 				this.exit.y + obj.body.velocity.y / 4
 			);
-			obj.inDoor = true;
 		}
 	};
 }
