@@ -78,8 +78,25 @@ export default class GameScene extends Phaser.Scene {
 				switch (type) {
 					case "door":
 						if (getProperty(properties, "exit")) {
-							console.log(id);
 							objs[id].exit = objs[getProperty(properties, "exit")];
+						} else {
+							const door = objs[id];
+							const exit = objs
+								.filter((o) => o instanceof Door)
+								.reduce((d1, d2, i) =>
+									d2 === door
+										? d1
+										: d1 === door
+										? d2
+										: Phaser.Math.Distance.BetweenPoints(door, d1) <
+										  Phaser.Math.Distance.BetweenPoints(door, d2)
+										? d1
+										: d2
+								);
+							if (exit.exit === undefined) {
+								door.exit = exit;
+								exit.exit = door;
+							}
 						}
 						break;
 

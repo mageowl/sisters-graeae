@@ -24,12 +24,19 @@ export default class Door extends Phaser.Physics.Arcade.Image {
 			config.scene.physics.add.overlap(sis, this, this.teleport);
 		});
 
-		this.setSize(8, 8);
+		this.setSize(4, 4);
 	}
 
+	/**
+	 * @param {Sister} obj
+	 * @memberof Door
+	 */
 	teleport = (obj) => {
 		if (this.exit && !obj.inDoor) {
-			obj.setPosition(this.exit.x, this.exit.y);
+			obj.setPosition(
+				this.exit.x + obj.body.velocity.x / 4,
+				this.exit.y + obj.body.velocity.y / 4
+			);
 			obj.inDoor = true;
 		}
 	};
