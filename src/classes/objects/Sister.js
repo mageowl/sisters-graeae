@@ -1,11 +1,12 @@
 export default class Sister extends Phaser.GameObjects.Container {
-	static SPEED = 200;
+	static SPEED = 80;
 	static PATIENTICE = 500;
 	static CALMING_SPEED = 5;
 
 	static eye = 0;
 	static count = 0;
 	static instances = [];
+	static eyed = null;
 
 	/**
 	 * @type {Object<string, Phaser.Input.Keyboard.Key>}
@@ -63,7 +64,7 @@ export default class Sister extends Phaser.GameObjects.Container {
 		this.id = Sister.count++;
 		this.keys.space.on("down", this.switchEye);
 
-		this.setScale(4).setPipeline("Light2D");
+		this.setPipeline("Light2D");
 	}
 
 	update() {
@@ -73,6 +74,8 @@ export default class Sister extends Phaser.GameObjects.Container {
 		const hasEye = Sister.eye === this.id;
 
 		if (hasEye) {
+			if (Sister.eyed !== this) Sister.eyed = this;
+
 			this.body.setVelocity(
 				(input.D + -input.A) * Sister.SPEED,
 				(input.S + -input.W) * Sister.SPEED
