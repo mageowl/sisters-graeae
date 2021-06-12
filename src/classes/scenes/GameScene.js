@@ -23,6 +23,7 @@ export default class GameScene extends Phaser.Scene {
 			frameHeight: 8
 		});
 		this.load.image("bubble", "sprites/bubble.png");
+		this.load.image("step", "sprites/step.png");
 
 		this.load.tilemapTiledJSON("map", "tilemaps/map.json");
 		this.load.image("tileset", "sprites/tileset.png");

@@ -44,13 +44,15 @@ export default class Sister extends Phaser.GameObjects.Container {
 		/** @type {Phaser.GameObjects.Light} */
 		light: null,
 		/** @type {Phaser.GameObjects.Sprite} */
-		bubble: null
+		bubble: null,
+		/** @type {Phaser.GameObjects.Particles.ParticleEmitter} */
+		step: null
 	};
 
 	/**
 	 * Creates an instance of Sister.
 	 * @param {object} config
-	 * @param {Phaser.Scene} config.scene
+	 * @param {import("../scenes/GameScene.js").default} config.scene
 	 * @memberof Sister
 	 */
 	constructor(config) {
@@ -63,6 +65,7 @@ export default class Sister extends Phaser.GameObjects.Container {
 			.rectangle(-4, -6, 8, 1, [0x6476e8, 0xfc6e47, 0x38ba5b][Sister.count])
 			.setOrigin(0, 0.5);
 		const bubble = config.scene.add.sprite(0, -12, "bubble").setVisible(false);
+		const step = config.scene.add.particles("step");
 
 		super(config.scene, config.x, config.y, [sprite, bar, patientice, bubble]);
 
@@ -79,6 +82,15 @@ export default class Sister extends Phaser.GameObjects.Container {
 		this.obj.patienticeBar = patientice;
 		this.obj.light = light;
 		this.obj.bubble = bubble;
+		this.obj.step = step.createEmitter({
+			x: 0,
+			y: 1,
+			lifespan: 500,
+			alpha: { start: 1, end: 0 },
+			follow: this,
+			followOffset: 10,
+			frequency: 200
+		});
 
 		this.keys = config.scene.input.keyboard.addKeys("W,A,S,D,E,space");
 		this.id = Sister.count++;
@@ -154,6 +166,7 @@ export default class Sister extends Phaser.GameObjects.Container {
 				this.anger -= Sister.CALMING_SPEED;
 			}
 		} else if (this.anger < this.patientice) {
+			this.obj.bubble.setVisible(false);
 			this.anger++;
 			this.wanderDirection +=
 				Math.random() > 0.99 ? Math.floor(Math.random() * 1) - 0.5 : 0;
@@ -163,6 +176,7 @@ export default class Sister extends Phaser.GameObjects.Container {
 				Math.cos(this.wanderDirection) *
 					(Sister.SPEED / Math.floor(this.speedBoost))
 			);
+
 			if (this.speedBoost < 3) this.speedBoost += 0.1;
 
 			this.obj.light.setIntensity(0.5).setRadius(30);
