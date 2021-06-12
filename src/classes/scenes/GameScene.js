@@ -31,6 +31,8 @@ export default class GameScene extends Phaser.Scene {
 		this.level = map.createLayer("map", "tileset");
 		this.level.setCollisionByProperty({ collide: true }).setPipeline("Light2D");
 
+		map.getObjectLayer("objects").objects.forEach(({}) => {});
+
 		this.container = this.add.container(0, 0, [
 			new Sister({
 				scene: this,
@@ -51,7 +53,7 @@ export default class GameScene extends Phaser.Scene {
 			})
 		]);
 
-		this.lights.enable().setAmbientColor(0x525252);
+		this.lights.enable();
 
 		this.target = this.physics.add.image(100, 100);
 		this.cameras.main.setZoom(5).startFollow(this.target, false);

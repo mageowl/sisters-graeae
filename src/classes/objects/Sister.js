@@ -5,6 +5,12 @@ export default class Sister extends Phaser.GameObjects.Container {
 
 	static eye = 0;
 	static count = 0;
+	/**
+	 * @type {Sister[]}
+	 *
+	 * @static
+	 * @memberof Sister
+	 */
 	static instances = [];
 	static eyed = null;
 
@@ -16,9 +22,10 @@ export default class Sister extends Phaser.GameObjects.Container {
 	keys;
 	switchEyeNxt = false;
 	anger = 0;
-	direction = 0;
+	wanderDirection = 0;
 	patientice = Sister.PATIENTICE;
 	kicking = 0;
+	speedBoost = 0;
 
 	/**
 	 * @type {Phaser.Physics.Arcade.Body}
@@ -32,6 +39,7 @@ export default class Sister extends Phaser.GameObjects.Container {
 		sprite: null,
 		/** @type {Phaser.GameObjects.Rectangle} */
 		patienticeBar: null,
+		/** @type {Phaser.GameObjects.Light} */
 		light: null
 	};
 
@@ -42,9 +50,7 @@ export default class Sister extends Phaser.GameObjects.Container {
 	 * @memberof Sister
 	 */
 	constructor(config) {
-		const light = config.scene.lights
-			.addLight(0, 0, 50, 0xffffff, 1.1)
-			.setVisible(false);
+		const light = config.scene.lights.addLight(0, 0, 50, 0xffffff, 1.1);
 		const sprite = config.scene.add.sprite(0, 0, "sister");
 		const bar = config.scene.add
 			.rectangle(0, -6, 8, 1, [0x3245bf, 0xab492e, 0x2a6339][Sister.count])
@@ -82,11 +88,12 @@ export default class Sister extends Phaser.GameObjects.Container {
 		);
 		const hasEye = Sister.eye === this.id;
 
+		this.obj.light.setPosition(this.x, this.y);
+
 		if (hasEye) {
 			if (Sister.eyed !== this) Sister.eyed = this;
 
-			this.obj.light.setVisible(true);
-			this.obj.light.setPosition(this.x, this.y);
+			this.obj.light.setIntensity(1).setRadius(50);
 
 			this.body.setVelocity(
 				(input.D + -input.A) * Sister.SPEED,
@@ -103,7 +110,7 @@ export default class Sister extends Phaser.GameObjects.Container {
 						closestID = sis.id;
 					}
 				});
-				Sister.eye = closestID;
+				if (closest < 40) Sister.eye = closestID;
 				this.switchEyeNxt = false;
 			}
 
@@ -112,25 +119,44 @@ export default class Sister extends Phaser.GameObjects.Container {
 				this.obj.sprite.setFlip(this.scene.input.mousePointer.worldX < this.x);
 			}
 
+			if (input.E) {
+				Sister.instances.forEach((sis) => {
+					const d = Phaser.Math.Distance.Between(this.x, this.y, sis.x, sis.y);
+					if (d < 50 && sis !== this) {
+						sis.wanderDirection = (
+							sis.x - this.x < 0 !== sis.y - this.y < 0
+								? Phaser.Math.Angle.Reverse
+								: (v) => v
+						)(Phaser.Math.Angle.Between(sis.x, sis.y, this.x, this.y));
+						sis.speedBoost = 9;
+						if (sis.anger < sis.patientice && sis.anger > 0)
+							sis.anger -= Sister.CALMING_SPEED;
+					}
+				});
+			}
+
 			if (this.anger > 0) {
 				this.anger -= Sister.CALMING_SPEED;
 			}
 		} else if (this.anger < this.patientice) {
 			this.anger++;
-			this.direction +=
+			this.wanderDirection +=
 				Math.random() > 0.99 ? Math.floor(Math.random() * 11) - 5 : 0;
 			this.body.setVelocity(
-				Math.sin(this.direction) * (Sister.SPEED / 10),
-				Math.cos(this.direction) * (Sister.SPEED / 10)
+				Math.sin(this.wanderDirection) *
+					(Sister.SPEED / (10 - this.speedBoost)),
+				Math.cos(this.wanderDirection) *
+					(Sister.SPEED / (10 - Math.floor(this.speedBoost)))
 			);
+			if (this.speedBoost > 0) this.speedBoost -= 0.1;
 
-			this.obj.light.setVisible(false);
+			this.obj.light.setIntensity(0.5).setRadius(30);
 		} else {
-			this.direction +=
+			this.wanderDirection +=
 				Math.random() > 0.75 ? Math.floor(Math.random() * 11) - 5 : 0;
 			this.body.setVelocity(
-				Math.sin(this.direction) * Sister.SPEED,
-				Math.cos(this.direction) * Sister.SPEED
+				Math.sin(this.wanderDirection) * Sister.SPEED,
+				Math.cos(this.wanderDirection) * Sister.SPEED
 			);
 		}
 
