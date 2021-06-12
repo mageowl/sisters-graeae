@@ -7,6 +7,7 @@ export default class Spider extends Phaser.Physics.Arcade.Sprite {
 
 	deathTimer = -1;
 	noiseLevel;
+	dead = false;
 
 	constructor(config) {
 		super(config.scene, config.x + 4, config.y + 4, "spider");
@@ -69,6 +70,7 @@ export default class Spider extends Phaser.Physics.Arcade.Sprite {
 			console.log(this.deathTimer);
 			if (this.deathTimer === 0) {
 				this.scene.updates.splice(this.scene.updates.indexOf(this), 1);
+				this.dead = true;
 				this.destroy();
 			}
 		}
@@ -78,7 +80,8 @@ export default class Spider extends Phaser.Physics.Arcade.Sprite {
 		if (
 			Math.floor(Sister.eyed.x / 160) * 160 ===
 				Math.floor(this.x / 160) * 160 &&
-			Math.floor(Sister.eyed.y / 96) * 96 === Math.floor(this.y / 96) * 96
+			Math.floor(Sister.eyed.y / 96) * 96 === Math.floor(this.y / 96) * 96 &&
+			!this.dead
 		) {
 			Door.SPIDERS_IN_ROOM = true;
 		}
