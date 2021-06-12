@@ -14,9 +14,13 @@ export default class GameScene extends Phaser.Scene {
 
 	sounds = {
 		random: [],
-		lowPatientice: [],
-		spiders: [],
-		roomEnter: []
+		kick: [],
+		walk: [],
+		enterRoom: [],
+		clearRoom: [],
+		seeSpiders: [],
+		getsEye: [],
+		lowPatience: []
 	};
 
 	constructor() {
@@ -35,53 +39,51 @@ export default class GameScene extends Phaser.Scene {
 		this.load.tilemapTiledJSON("map", "tilemaps/map.json");
 		this.load.image("tileset", "sprites/tileset.png");
 
-		// this.load.audio("ah-ha", ["sounds/ah-ha.m4a"]);
-		// this.load.audio("are-you-sure", ["are-you-sure.m4a"]);
-		// this.load.audio("bathroom", ["bathroom.m4a"]);
-		// this.load.audio("feet-hurt", ["feet-hurt.m4a"]);
-		// this.load.audio("follow-me", ["follow-me.m4a"]);
-		// this.load.audio("give-me-the-eye", ["give-me-the-eye.m4a"]);
-		// this.load.audio("grunt", ["grunt.m4a"]);
-		// this.load.audio("hmm1", ["hmm1.m4a"]);
-		// this.load.audio("hmm2", ["hmm2.m4a"]);
-		// this.load.audio("just-tell-him", ["just-tell-him.m4a"]);
-		// this.load.audio("keep-up", ["keep-up.m4a"]);
-		// this.load.audio("my-turn-yet", ["my-turn-yet.m4a"]);
-		// this.load.audio("other-left", ["other-left.m4a"]);
-		// this.load.audio("ouch-my-foot", ["ouch-my-foot.m4a"]);
-		// this.load.audio("out-of-my-way", ["out-of-my-way.m4a"]);
-		// this.load.audio("scream1", ["scream1.m4a"]);
-		// this.load.audio("scream2", ["scream2.m4a"]);
-		// this.load.audio("secret-backdoor", ["secret-backdoor.m4a"]);
-		// this.load.audio("something-smells", ["something-smells.m4a"]);
-		// this.load.audio("spiders-hate", ["spiders-hate.m4a"]);
-		// this.load.audio("spiders-speeders", ["spiders-speeders.m4a"]);
-		// this.load.audio("spiders-tasty", ["spiders-tasty.m4a"]);
-		// this.load.audio("there-yet", ["there-yet.m4a"]);
-		// this.load.audio("toot", ["sounds/toot.m4a"]);
-		// this.load.audio("want-the-eye-no", ["want-the-eye-no.m4a"]);
-		// this.load.audio("want-the-eye", ["want-the-eye.m4a"]);
-		// this.load.audio("were-lost", ["were-lost.m4a"]);
-		// this.load.audio("what-do-you-see", ["what-do-you-see.m4a"]);
-		// this.load.audio("you-cant-navigate", ["you-cant-navigate.m4a"]);
+		this.load.audio("ah-ha", ["sounds/ah-ha.m4a"]);
+		this.load.audio("are-you-sure", ["sounds/are-you-sure.m4a"]);
+		this.load.audio("bathroom", ["sounds/bathroom.m4a"]);
+		this.load.audio("chuck-norris", ["sounds/chuck-norris.m4a"]);
+		this.load.audio("feet-hurt", ["sounds/feet-hurt.m4a"]);
+		this.load.audio("follow-me", ["sounds/follow-me.m4a"]);
+		this.load.audio("footsteps-1", ["sounds/footsteps-1.m4a"]);
+		this.load.audio("footsteps-2", ["sounds/footsteps-2.m4a"]);
+		this.load.audio("give-me-the-eye", ["sounds/give-me-the-eye.m4a"]);
+		this.load.audio("grunt", ["sounds/grunt.m4a"]);
+		this.load.audio("hmm", ["sounds/hmm.m4a"]);
+		this.load.audio("hmm1", ["sounds/hmm1.m4a"]);
+		this.load.audio("hmm2", ["sounds/hmm2.m4a"]);
+		this.load.audio("just-tell-him", ["sounds/just-tell-him.m4a"]);
+		this.load.audio("keep-up", ["sounds/keep-up.m4a"]);
+		this.load.audio("kick-1", ["sounds/kick-1.m4a"]);
+		this.load.audio("kick-2", ["sounds/kick-2.m4a"]);
+		this.load.audio("kick-3", ["sounds/kick-3.m4a"]);
+		this.load.audio("kick-4", ["sounds/kick-4.m4a"]);
+		this.load.audio("my-turn-yet", ["sounds/my-turn-yet.m4a"]);
+		this.load.audio("nice-curtains", ["sounds/nice-curtains.m4a"]);
+		this.load.audio("ninty-nine-bottles", ["sounds/ninty-nine-bottles.m4a"]);
+		this.load.audio("other-left", ["sounds/other-left.m4a"]);
+		this.load.audio("ouch-my-foot", ["sounds/ouch-my-foot.m4a"]);
+		this.load.audio("out-of-my-way", ["sounds/out-of-my-way.m4a"]);
+		this.load.audio("over-here", ["sounds/over-here.m4a"]);
+		this.load.audio("scream-its-you", ["sounds/scream-its-you.m4a"]);
+		this.load.audio("scream1", ["sounds/scream1.m4a"]);
+		this.load.audio("scream2", ["sounds/scream2.m4a"]);
+		this.load.audio("secret-backdoor", ["sounds/secret-backdoor.m4a"]);
+		this.load.audio("something-smells", ["sounds/something-smells.m4a"]);
+		this.load.audio("spiders-hate", ["sounds/spiders-hate.m4a"]);
+		this.load.audio("spiders-more", ["sounds/spiders-more.m4a"]);
+		this.load.audio("spiders-speeders", ["sounds/spiders-speeders.m4a"]);
+		this.load.audio("spiders-tastey", ["sounds/spiders-tastey.m4a"]);
+		this.load.audio("there-yet", ["sounds/there-yet.m4a"]);
+		this.load.audio("toot", ["sounds/toot.m4a"]);
+		this.load.audio("want-the-eye-no", ["sounds/want-the-eye-no.m4a"]);
+		this.load.audio("want-the-eye", ["sounds/want-the-eye.m4a"]);
+		this.load.audio("were-lost", ["sounds/were-lost.m4a"]);
+		this.load.audio("what-do-you-see", ["sounds/what-do-you-see.m4a"]);
+		this.load.audio("you-cant-navigate", ["sounds/you-cant-navigate.m4a"]);
 	}
 
 	create() {
-		this.sounds.random.push(
-			this.sound.add("ah-ha"),
-			this.sound.add("are-you-sure"),
-			this.sound.add("bathroom"),
-			this.sound.add("feet-hurt"),
-			this.sound.add("follow-me"),
-			this.sound.add("give-me-the-eye"),
-			this.sound.add("grunt"),
-			this.sound.add("toot"),
-			this.sound.add("hmm1"),
-			this.sound.add("hmm2"),
-			this.sound.add("out-of-my-way"),
-			this.sound.add("")
-		);
-
 		const map = this.add.tilemap("map", 8, 8);
 		map.addTilesetImage("tileset", "tileset");
 		this.level = map.createLayer("map", "tileset");
@@ -172,6 +174,88 @@ export default class GameScene extends Phaser.Scene {
 
 		this.target = this.add.image(100, 100);
 		this.cameras.main.setZoom(5).startFollow(this.target, false);
+
+		// SOUNDS
+		this.sounds.random.push(
+			this.sound.add("are-you-sure"),
+			this.sound.add("bathroom"),
+			this.sound.add("feet-hurt"),
+			this.sound.add("grunt"),
+			this.sound.add("hmm"),
+			this.sound.add("hmm1"),
+			this.sound.add("hmm2"),
+			this.sound.add("keep-up"),
+			this.sound.add("nice-curtains"),
+			this.sound.add("ninty-nine-bottles"),
+			this.sound.add("ouch-my-foot"),
+			this.sound.add("out-of-my-way"),
+			this.sound.add("scream-its-you"),
+			this.sound.add("scream1"),
+			this.sound.add("scream2"),
+			this.sound.add("something-smells"),
+			this.sound.add("there-yet"),
+			this.sound.add("toot"),
+			this.sound.add("were-lost")
+		);
+
+		this.sounds.random.kick.push(
+			this.sound.add("kick-1"),
+			this.sound.add("kick-2"),
+			this.sound.add("kick-3"),
+			this.sound.add("kick-4")
+		);
+
+		this.sounds.random.walk.push(
+			this.sound.add("footsteps-1"),
+			this.sound.add("footsteps-2")
+		);
+
+		this.sounds.random.enterRoom.push(
+			this.sound.add("ah-ha"),
+			this.sound.add("are-you-sure"),
+			this.sound.add("other-left"),
+			this.sound.add("over-here"),
+			this.sound.add("scream1"),
+			this.sound.add("scream2"),
+			this.sound.add("secret-backdoor")
+		);
+
+		this.sounds.random.clearRoom.push(
+			this.sound.add("chuck-norris"),
+			this.sound.add("follow-me"),
+			this.sound.add("keep-up"),
+			this.sound.add("nice-curtains"),
+			this.sound.add("out-of-my-way"),
+			this.sound.add("spiders-hate")
+		);
+
+		this.sounds.random.seeSpiders.push(
+			this.sound.add("spiders-hate"),
+			this.sound.add("spiders-more"),
+			this.sound.add("spiders-speeders"),
+			this.sound.add("spiders-tastey")
+		);
+
+		this.sounds.random.getsEye.push(
+			this.sound.add("hmm"),
+			this.sound.add("hmm1"),
+			this.sound.add("hmm2"),
+			this.sound.add("out-of-my-way"),
+			this.sound.add("what-do-you-see")
+		);
+
+		this.sounds.random.lowPatience.push(
+			this.sound.add("feet-hurt"),
+			this.sound.add("give-me-the-eye"),
+			this.sound.add("grunt"),
+			this.sound.add("just-tell-him"),
+			this.sound.add("my-turn-yet"),
+			this.sound.add("there-yet"),
+			this.sound.add("want-the-eye-no"),
+			this.sound.add("want-the-eye"),
+			this.sound.add("were-lost"),
+			this.sound.add("you-cant-navigate")
+		);
 	}
 
 	update() {
