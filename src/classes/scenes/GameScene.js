@@ -35,11 +35,52 @@ export default class GameScene extends Phaser.Scene {
 		this.load.tilemapTiledJSON("map", "tilemaps/map.json");
 		this.load.image("tileset", "sprites/tileset.png");
 
+		this.load.audio("ah-ha", ["sounds/ah-ha.m4a"]);
+		this.load.audio("are-you-sure", ["are-you-sure.m4a"]);
+		this.load.audio("bathroom", ["bathroom.m4a"]);
+		this.load.audio("feet-hurt", ["feet-hurt.m4a"]);
+		this.load.audio("follow-me", ["follow-me.m4a"]);
+		this.load.audio("give-me-the-eye", ["give-me-the-eye.m4a"]);
+		this.load.audio("grunt", ["grunt.m4a"]);
+		this.load.audio("hmm1", ["hmm1.m4a"]);
+		this.load.audio("hmm2", ["hmm2.m4a"]);
+		this.load.audio("just-tell-him", ["just-tell-him.m4a"]);
+		this.load.audio("keep-up", ["keep-up.m4a"]);
+		this.load.audio("my-turn-yet", ["my-turn-yet.m4a"]);
+		this.load.audio("other-left", ["other-left.m4a"]);
+		this.load.audio("ouch-my-foot", ["ouch-my-foot.m4a"]);
+		this.load.audio("out-of-my-way", ["out-of-my-way.m4a"]);
+		this.load.audio("scream1", ["scream1.m4a"]);
+		this.load.audio("scream2", ["scream2.m4a"]);
+		this.load.audio("secret-backdoor", ["secret-backdoor.m4a"]);
+		this.load.audio("something-smells", ["something-smells.m4a"]);
+		this.load.audio("spiders-hate", ["spiders-hate.m4a"]);
+		this.load.audio("spiders-speeders", ["spiders-speeders.m4a"]);
+		this.load.audio("spiders-tasty", ["spiders-tasty.m4a"]);
+		this.load.audio("there-yet", ["there-yet.m4a"]);
 		this.load.audio("toot", ["sounds/toot.m4a"]);
+		this.load.audio("want-the-eye-no", ["want-the-eye-no.m4a"]);
+		this.load.audio("want-the-eye", ["want-the-eye.m4a"]);
+		this.load.audio("were-lost", ["were-lost.m4a"]);
+		this.load.audio("what-do-you-see", ["what-do-you-see.m4a"]);
+		this.load.audio("you-cant-navigate", ["you-cant-navigate.m4a"]);
 	}
 
 	create() {
-		this.sounds.random.push(this.sound.add("toot"));
+		this.sounds.random.push(
+			this.sound.add("ah-ha"),
+			this.sound.add("are-you-sure"),
+			this.sound.add("bathroom"),
+			this.sound.add("feet-hurt"),
+			this.sound.add("follow-me"),
+			this.sound.add("give-me-the-eye"),
+			this.sound.add("grunt"),
+			this.sound.add("toot"),
+			this.sound.add("hmm1"),
+			this.sound.add("hmm2"),
+			this.sound.add("out-of-my-way"),
+			this.sound.add("")
+		);
 
 		const map = this.add.tilemap("map", 8, 8);
 		map.addTilesetImage("tileset", "tileset");

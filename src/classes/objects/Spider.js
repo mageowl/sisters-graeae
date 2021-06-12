@@ -4,6 +4,7 @@ export default class Spider extends Phaser.Physics.Arcade.Sprite {
 	static SPEED = 5;
 
 	deathTimer = -1;
+	noiseLevel;
 
 	constructor(config) {
 		super(config.scene, config.x + 4, config.y + 4, "spider");
@@ -13,6 +14,8 @@ export default class Spider extends Phaser.Physics.Arcade.Sprite {
 		config.scene.updates.push(this);
 
 		config.scene.physics.add.collider(this, config.scene.level);
+
+		this.noiseLevel = Math.random() * 30;
 
 		this.setPipeline("Light2D");
 	}
@@ -34,6 +37,13 @@ export default class Spider extends Phaser.Physics.Arcade.Sprite {
 					Math.cos(angle) * Spider.SPEED,
 					Math.sin(angle) * Spider.SPEED
 				);
+
+				if (
+					Phaser.Math.Distance.BetweenPoints(this, sis) < this.noiseLevel &&
+					sis.id !== Sister.id
+				) {
+					sis.kicking = 8;
+				}
 
 				if (this.scene.physics.overlap(this, sis)) {
 					if (sis.kicking) {
