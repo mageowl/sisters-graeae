@@ -20,8 +20,10 @@ export default class GameScene extends Phaser.Scene {
 		clearRoom: [],
 		seeSpiders: [],
 		getsEye: [],
-		lowPatience: []
+		lowPatientice: [],
+		noise: []
 	};
+	soundPlaying = false;
 
 	constructor() {
 		super("game");
@@ -50,7 +52,6 @@ export default class GameScene extends Phaser.Scene {
 		this.load.audio("footsteps-2", ["sounds/footsteps-2.m4a"]);
 		this.load.audio("give-me-the-eye", ["sounds/give-me-the-eye.m4a"]);
 		this.load.audio("grunt", ["sounds/grunt.m4a"]);
-		this.load.audio("hmm", ["sounds/hmm.m4a"]);
 		this.load.audio("hmm1", ["sounds/hmm1.m4a"]);
 		this.load.audio("hmm2", ["sounds/hmm2.m4a"]);
 		this.load.audio("just-tell-him", ["sounds/just-tell-him.m4a"]);
@@ -182,7 +183,6 @@ export default class GameScene extends Phaser.Scene {
 			this.sound.add("bathroom"),
 			this.sound.add("feet-hurt"),
 			this.sound.add("grunt"),
-			this.sound.add("hmm"),
 			this.sound.add("hmm1"),
 			this.sound.add("hmm2"),
 			this.sound.add("keep-up"),
@@ -226,8 +226,7 @@ export default class GameScene extends Phaser.Scene {
 			this.sound.add("follow-me"),
 			this.sound.add("keep-up"),
 			this.sound.add("nice-curtains"),
-			this.sound.add("out-of-my-way"),
-			this.sound.add("spiders-hate")
+			this.sound.add("out-of-my-way")
 		);
 
 		this.sounds.seeSpiders.push(
@@ -238,14 +237,13 @@ export default class GameScene extends Phaser.Scene {
 		);
 
 		this.sounds.getsEye.push(
-			this.sound.add("hmm"),
 			this.sound.add("hmm1"),
 			this.sound.add("hmm2"),
 			this.sound.add("out-of-my-way"),
 			this.sound.add("what-do-you-see")
 		);
 
-		this.sounds.lowPatience.push(
+		this.sounds.lowPatientice.push(
 			this.sound.add("feet-hurt"),
 			this.sound.add("give-me-the-eye"),
 			this.sound.add("grunt"),
@@ -256,6 +254,14 @@ export default class GameScene extends Phaser.Scene {
 			this.sound.add("want-the-eye"),
 			this.sound.add("were-lost"),
 			this.sound.add("you-cant-navigate")
+		);
+
+		this.sounds.noise.push(
+			this.sound.add("grunt"),
+			this.sound.add("follow-me"),
+			this.sound.add("keep-up"),
+			this.sound.add("hmm1"),
+			this.sound.add("hmm2")
 		);
 	}
 
@@ -268,10 +274,24 @@ export default class GameScene extends Phaser.Scene {
 			Math.floor(Sister.eyed.x / 160) * 160 + 80,
 			Math.floor(Sister.eyed.y / 96) * 96 + 48
 		);
+
+		if (Math.random() > 0.999) this.playSound("random");
 	}
 
 	playSound(key) {
-		const soundList = this.sounds[key];
-		soundList[Math.floor(Math.random() * soundList.length)].play();
+		if (!this.soundPlaying) {
+			const soundList = this.sounds[key];
+			/** @type {Phaser.Sound.BaseSound} */
+			const sound = soundList[Math.floor(Math.random() * soundList.length)];
+			this.soundPlaying = true;
+			sound.on("complete", this.completeSound);
+			sound.play();
+			return true;
+		}
+		return false;
 	}
+
+	completeSound = () => {
+		this.soundPlaying = false;
+	};
 }

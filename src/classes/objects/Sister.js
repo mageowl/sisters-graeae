@@ -27,6 +27,7 @@ export default class Sister extends Phaser.GameObjects.Container {
 	patientice = Sister.PATIENTICE;
 	kicking = 0;
 	speedBoost = 3;
+	lps = false;
 
 	/**
 	 * @type {Phaser.Physics.Arcade.Body}
@@ -129,10 +130,13 @@ export default class Sister extends Phaser.GameObjects.Container {
 				});
 				if (closest < 40) Sister.eye = closestID;
 				this.switchEyeNxt = false;
+				this.scene.playSound("getsEye");
 			}
 
 			if (input.E) {
 				if (this.hoarseness === 0) {
+					this.scene.playSound("noise");
+
 					Sister.instances.forEach((sis) => {
 						const d = Phaser.Math.Distance.Between(
 							this.x,
@@ -159,7 +163,14 @@ export default class Sister extends Phaser.GameObjects.Container {
 			if (this.anger > 0) {
 				this.anger -= Sister.CALMING_SPEED;
 			}
+
+			this.lps = false;
 		} else if (this.anger < this.patientice) {
+			if (!this.lps && this.anger > this.patientice / 10) {
+				this.scene.playSound("lowPatientice");
+				this.lps = true;
+			}
+
 			this.obj.bubble.setVisible(false);
 			this.anger++;
 			this.wanderDirection +=
@@ -184,9 +195,10 @@ export default class Sister extends Phaser.GameObjects.Container {
 		}
 
 		if (this.kicking) {
+			if (this.kicking === 10) this.scene.playSound("kick");
 			this.kicking--;
 			this.obj.sprite.setFlip(this.scene.input.mousePointer.worldX < this.x);
-		}
+		} else this.obj.sprite.setTint(0xffffff);
 
 		this.obj.sprite.setFrame(
 			hasEye ? (this.kicking ? 1 : 0) : this.anger === this.patientice ? 3 : 2

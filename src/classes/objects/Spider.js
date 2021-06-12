@@ -1,3 +1,5 @@
+import eventBoard from "../../eventBoard.js";
+import Door from "./Door.js";
 import Sister from "./Sister.js";
 
 export default class Spider extends Phaser.Physics.Arcade.Sprite {
@@ -16,6 +18,8 @@ export default class Spider extends Phaser.Physics.Arcade.Sprite {
 		config.scene.physics.add.collider(this, config.scene.level);
 
 		this.noiseLevel = Math.random() * 30;
+
+		eventBoard.on("checkspiders", this.checkSpiders);
 
 		this.setPipeline("Light2D");
 	}
@@ -40,7 +44,7 @@ export default class Spider extends Phaser.Physics.Arcade.Sprite {
 
 				if (
 					Phaser.Math.Distance.BetweenPoints(this, sis) < this.noiseLevel &&
-					sis.id !== Sister.id
+					sis.id !== Sister.eye
 				) {
 					sis.kicking = 8;
 				}
@@ -69,4 +73,14 @@ export default class Spider extends Phaser.Physics.Arcade.Sprite {
 			}
 		}
 	}
+
+	checkSpiders = () => {
+		if (
+			Math.floor(Sister.eyed.x / 160) * 160 ===
+				Math.floor(this.x / 160) * 160 &&
+			Math.floor(Sister.eyed.y / 96) * 96 === Math.floor(this.y / 96) * 96
+		) {
+			Door.SPIDERS_IN_ROOM = true;
+		}
+	};
 }
