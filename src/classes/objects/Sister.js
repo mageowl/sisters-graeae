@@ -1,6 +1,6 @@
 export default class Sister extends Phaser.GameObjects.Container {
 	static SPEED = 30;
-	static PATIENTICE = 500;
+	static PATIENTICE = 1000;
 	static CALMING_SPEED = 5;
 
 	static eye = 0;
@@ -22,10 +22,12 @@ export default class Sister extends Phaser.GameObjects.Container {
 	keys;
 	switchEyeNxt = false;
 	anger = 0;
+	hoarseness = 0;
 	wanderDirection = 0;
 	patientice = Sister.PATIENTICE;
 	kicking = 0;
-	speedBoost = 0;
+	speedBoost = 3;
+	inDoor = false;
 
 	/**
 	 * @type {Phaser.Physics.Arcade.Body}
@@ -120,19 +122,23 @@ export default class Sister extends Phaser.GameObjects.Container {
 			}
 
 			if (input.E) {
-				Sister.instances.forEach((sis) => {
-					const d = Phaser.Math.Distance.Between(this.x, this.y, sis.x, sis.y);
-					if (d < 50 && sis !== this) {
-						sis.wanderDirection = (
-							sis.x - this.x < 0 !== sis.y - this.y < 0
-								? Phaser.Math.Angle.Reverse
-								: (v) => v
-						)(Phaser.Math.Angle.Between(sis.x, sis.y, this.x, this.y));
-						sis.speedBoost = 9;
-						if (sis.anger < sis.patientice && sis.anger > 0)
-							sis.anger -= Sister.CALMING_SPEED;
-					}
-				});
+				if (this.hoarseness === 0) {
+					Sister.instances.forEach((sis) => {
+						const d = Phaser.Math.Distance.Between(
+							this.x,
+							this.y,
+							sis.x,
+							sis.y
+						);
+						if (sis !== this && d < 50) {
+							sis.wanderDirection =
+								-1 * Phaser.Math.Angle.Between(this.x, this.y, sis.x, sis.y) -
+								Math.PI * 0.5;
+							sis.speedBoost = 1;
+						}
+						this.hoarseness = 10;
+					});
+				} else if (this.hoarseness > 0) this.hoarseness--;
 			}
 
 			if (this.anger > 0) {
@@ -141,23 +147,27 @@ export default class Sister extends Phaser.GameObjects.Container {
 		} else if (this.anger < this.patientice) {
 			this.anger++;
 			this.wanderDirection +=
-				Math.random() > 0.99 ? Math.floor(Math.random() * 11) - 5 : 0;
+				Math.random() > 0.99 ? Math.floor(Math.random() * 1) - 0.5 : 0;
 			this.body.setVelocity(
 				Math.sin(this.wanderDirection) *
-					(Sister.SPEED / (10 - this.speedBoost)),
+					(Sister.SPEED / Math.floor(this.speedBoost)),
 				Math.cos(this.wanderDirection) *
-					(Sister.SPEED / (10 - Math.floor(this.speedBoost)))
+					(Sister.SPEED / Math.floor(this.speedBoost))
 			);
-			if (this.speedBoost > 0) this.speedBoost -= 0.1;
+			if (this.speedBoost < 3) this.speedBoost += 0.1;
 
 			this.obj.light.setIntensity(0.5).setRadius(30);
 		} else {
 			this.wanderDirection +=
 				Math.random() > 0.75 ? Math.floor(Math.random() * 11) - 5 : 0;
 			this.body.setVelocity(
-				Math.sin(this.wanderDirection) * Sister.SPEED,
-				Math.cos(this.wanderDirection) * Sister.SPEED
+				Math.cos(this.wanderDirection) * Sister.SPEED,
+				Math.sin(this.wanderDirection) * Sister.SPEED
 			);
+		}
+
+		if (!this.body.touching) {
+			this.inDoor = false;
 		}
 
 		this.obj.sprite.setFrame(
