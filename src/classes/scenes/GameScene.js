@@ -230,7 +230,7 @@ export default class GameScene extends Phaser.Scene {
 			this.sound.add("spiders-hate")
 		);
 
-		this.sounds.random.seeSpiders.push(
+		this.sounds.seeSpiders.push(
 			this.sound.add("spiders-hate"),
 			this.sound.add("spiders-more"),
 			this.sound.add("spiders-speeders"),
