@@ -39,6 +39,7 @@ export default class GameScene extends Phaser.Scene {
     this.load.tilemapTiledJSON("map", "tilemaps/map.json");
     this.load.image("tileset", "sprites/tileset.png");
 
+    // LOAD SOUNDS
     this.load.audio("ah-ha", ["sounds/ah-ha.m4a"]);
     this.load.audio("are-you-sure", ["sounds/are-you-sure.m4a"]);
     this.load.audio("bathroom", ["sounds/bathroom.m4a"]);
@@ -175,7 +176,7 @@ export default class GameScene extends Phaser.Scene {
     this.target = this.add.image(100, 100);
     this.cameras.main.setZoom(5).startFollow(this.target, false);
 
-    // SOUNDS
+    // CATEGORIZE SOUNDS
     this.sounds.random.push(
       this.sound.add("are-you-sure"),
       this.sound.add("bathroom"),
