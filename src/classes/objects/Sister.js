@@ -166,7 +166,7 @@ export default class Sister extends Phaser.GameObjects.Container {
 			);
 		}
 
-		if (this.body.touching.none) {
+		if (this.body.touching.none && !this.body.embedded) {
 			this.inDoor = false;
 		}
 
