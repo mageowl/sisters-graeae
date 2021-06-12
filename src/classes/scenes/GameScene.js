@@ -199,19 +199,19 @@ export default class GameScene extends Phaser.Scene {
 			this.sound.add("were-lost")
 		);
 
-		this.sounds.random.kick.push(
+		this.sounds.kick.push(
 			this.sound.add("kick-1"),
 			this.sound.add("kick-2"),
 			this.sound.add("kick-3"),
 			this.sound.add("kick-4")
 		);
 
-		this.sounds.random.walk.push(
+		this.sounds.walk.push(
 			this.sound.add("footsteps-1"),
 			this.sound.add("footsteps-2")
 		);
 
-		this.sounds.random.enterRoom.push(
+		this.sounds.enterRoom.push(
 			this.sound.add("ah-ha"),
 			this.sound.add("are-you-sure"),
 			this.sound.add("other-left"),
@@ -221,7 +221,7 @@ export default class GameScene extends Phaser.Scene {
 			this.sound.add("secret-backdoor")
 		);
 
-		this.sounds.random.clearRoom.push(
+		this.sounds.clearRoom.push(
 			this.sound.add("chuck-norris"),
 			this.sound.add("follow-me"),
 			this.sound.add("keep-up"),
@@ -245,7 +245,7 @@ export default class GameScene extends Phaser.Scene {
 			this.sound.add("what-do-you-see")
 		);
 
-		this.sounds.random.lowPatience.push(
+		this.sounds.lowPatience.push(
 			this.sound.add("feet-hurt"),
 			this.sound.add("give-me-the-eye"),
 			this.sound.add("grunt"),
