@@ -75,7 +75,10 @@ export default class GameScene extends Phaser.Scene {
 			.objects.forEach(({ type, properties, id }) => {
 				switch (type) {
 					case "door":
-						objs[id].exit = objs[getProperty(properties, "exit")];
+						if (getProperty(properties, "exit")) {
+							console.log(id);
+							objs[id].exit = objs[getProperty(properties, "exit")];
+						}
 						break;
 
 					default:
