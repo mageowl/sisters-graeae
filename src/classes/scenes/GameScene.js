@@ -28,32 +28,32 @@ export default class GameScene extends Phaser.Scene {
 	create() {
 		const map = this.add.tilemap("map", 8, 8);
 		map.addTilesetImage("tileset", "tileset");
-		map.createLayer("map", "tileset");
+		this.level = map.createLayer("map", "tileset");
+		this.level.setCollisionByProperty({ collide: true }).setPipeline("Light2D");
 
 		this.container = this.add.container(0, 0, [
 			new Sister({
 				scene: this,
-				x: 100,
-				y: 100
+				x: 1344,
+				y: 840
 			}),
 
 			new Sister({
 				scene: this,
-				x: 300,
-				y: 300
+				x: 1356,
+				y: 840
 			}),
 
 			new Sister({
 				scene: this,
-				x: 400,
-				y: 400
+				x: 1364,
+				y: 840
 			})
 		]);
 
-		this.lights.enable().setAmbientColor(0x22222);
+		this.lights.enable().setAmbientColor(0x525252);
 
 		this.target = this.physics.add.image(100, 100);
-
 		this.cameras.main.setZoom(5).startFollow(this.target, false);
 	}
 
@@ -66,6 +66,5 @@ export default class GameScene extends Phaser.Scene {
 			Math.floor(Sister.eyed.x / 160) * 160 + 80,
 			Math.floor(Sister.eyed.y / 96) * 96 + 48
 		);
-		console.log(Sister.eyed.xd);
 	}
 }
