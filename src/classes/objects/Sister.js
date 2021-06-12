@@ -1,6 +1,7 @@
 export default class Sister extends Phaser.GameObjects.Container {
 	static SPEED = 200;
 	static PATIENTICE = 500;
+	static CALMING_SPEED = 5;
 
 	static eye = 0;
 	static count = 0;
@@ -45,7 +46,7 @@ export default class Sister extends Phaser.GameObjects.Container {
 			.rectangle(0, -6, 8, 1, 0xffffff)
 			.setOrigin(0.5);
 		const patientice = config.scene.add
-			.rectangle(-4, -6, 8, 1, 0xff0000)
+			.rectangle(-4, -6, 8, 1, 0x6476e8)
 			.setOrigin(0, 0.5);
 
 		super(config.scene, config.x, config.y, [sprite, bar, patientice]);
@@ -92,7 +93,7 @@ export default class Sister extends Phaser.GameObjects.Container {
 			}
 
 			if (this.anger > 0) {
-				this.anger -= 10;
+				this.anger -= Sister.CALMING_SPEED;
 			}
 		} else if (this.anger < this.patientice) {
 			this.anger++;
@@ -114,7 +115,7 @@ export default class Sister extends Phaser.GameObjects.Container {
 		this.obj.sprite.setFrame(
 			hasEye ? 0 : this.anger === this.patientice ? 3 : 2
 		);
-		this.obj.patienticeBar.width = (8 / this.patientice) * this.anger;
+		this.obj.patienticeBar.width = 8 - (8 / this.patientice) * this.anger;
 	}
 
 	switchEye = (e) => {
