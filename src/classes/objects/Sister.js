@@ -42,7 +42,9 @@ export default class Sister extends Phaser.GameObjects.Container {
 		/** @type {Phaser.GameObjects.Rectangle} */
 		patienticeBar: null,
 		/** @type {Phaser.GameObjects.Light} */
-		light: null
+		light: null,
+		/** @type {Phaser.GameObjects.Sprite} */
+		bubble: null
 	};
 
 	/**
@@ -60,8 +62,9 @@ export default class Sister extends Phaser.GameObjects.Container {
 		const patientice = config.scene.add
 			.rectangle(-4, -6, 8, 1, [0x6476e8, 0xfc6e47, 0x38ba5b][Sister.count])
 			.setOrigin(0, 0.5);
+		const bubble = config.scene.add.sprite(0, -12, "bubble").setVisible(false);
 
-		super(config.scene, config.x, config.y, [sprite, bar, patientice]);
+		super(config.scene, config.x, config.y, [sprite, bar, patientice, bubble]);
 
 		this.setSize(6, 8);
 
@@ -75,6 +78,7 @@ export default class Sister extends Phaser.GameObjects.Container {
 		this.obj.sprite = sprite;
 		this.obj.patienticeBar = patientice;
 		this.obj.light = light;
+		this.obj.bubble = bubble;
 
 		this.keys = config.scene.input.keyboard.addKeys("W,A,S,D,E,space");
 		this.id = Sister.count++;
@@ -136,10 +140,15 @@ export default class Sister extends Phaser.GameObjects.Container {
 								Math.PI * 0.5;
 							sis.speedBoost = 1;
 						}
-						this.hoarseness = 10;
 					});
-				} else if (this.hoarseness > 0) this.hoarseness--;
-			}
+
+					this.hoarseness = 30;
+
+					this.obj.bubble.setVisible(true);
+				}
+			} else if (this.hoarseness > 0) this.hoarseness--;
+
+			if (this.hoarseness === 0) this.obj.bubble.setVisible(false);
 
 			if (this.anger > 0) {
 				this.anger -= Sister.CALMING_SPEED;
@@ -166,7 +175,7 @@ export default class Sister extends Phaser.GameObjects.Container {
 			);
 		}
 
-		if (!this.body.touching) {
+		if (this.body.touching.none && !this.body.embedded) {
 			this.inDoor = false;
 		}
 

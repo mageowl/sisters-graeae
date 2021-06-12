@@ -22,6 +22,7 @@ export default class GameScene extends Phaser.Scene {
 			frameWidth: 8,
 			frameHeight: 8
 		});
+		this.load.image("bubble", "sprites/bubble.png");
 
 		this.load.tilemapTiledJSON("map", "tilemaps/map.json");
 		this.load.image("tileset", "sprites/tileset.png");
@@ -75,7 +76,10 @@ export default class GameScene extends Phaser.Scene {
 			.objects.forEach(({ type, properties, id }) => {
 				switch (type) {
 					case "door":
-						objs[id].exit = objs[getProperty(properties, "exit")];
+						if (getProperty(properties, "exit")) {
+							console.log(id);
+							objs[id].exit = objs[getProperty(properties, "exit")];
+						}
 						break;
 
 					default:
