@@ -1,6 +1,9 @@
+import eventBoard from "../../eventBoard.js";
 import Sister from "./Sister.js";
 
 export default class Door extends Phaser.Physics.Arcade.Image {
+	static SPIDERS_IN_ROOM = false;
+
 	/**
 	 * @type {Door}
 	 *
@@ -34,10 +37,15 @@ export default class Door extends Phaser.Physics.Arcade.Image {
 	teleport = (obj) => {
 		if (this.exit) {
 			obj.setPosition(
-				this.exit.x + obj.body.velocity.x / 4,
-				this.exit.y + obj.body.velocity.y / 4
+				this.exit.x + Math.sign(obj.body.velocity.x) * 10,
+				this.exit.y + Math.sign(obj.body.velocity.y) * 10
 			);
-			this.scene.playSound("enterRoom");
+
+			Door.SPIDERS_IN_ROOM = false;
+			eventBoard.emit("checkspiders");
+			if (Door.SPIDERS_IN_ROOM) {
+				this.scene.playSound("seeSpiders");
+			} else if (Math.random() > 0.6) this.scene.playSound("enterRoom");
 		}
 	};
 }
