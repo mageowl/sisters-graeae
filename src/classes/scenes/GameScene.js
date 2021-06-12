@@ -1,3 +1,5 @@
+import { getProperty } from "../../util.js";
+import Door from "../objects/Door.js";
 import Sister from "../objects/Sister.js";
 
 export default class GameScene extends Phaser.Scene {
@@ -31,8 +33,6 @@ export default class GameScene extends Phaser.Scene {
 		this.level = map.createLayer("map", "tileset");
 		this.level.setCollisionByProperty({ collide: true }).setPipeline("Light2D");
 
-		map.getObjectLayer("objects").objects.forEach(({}) => {});
-
 		this.container = this.add.container(0, 0, [
 			new Sister({
 				scene: this,
@@ -53,9 +53,39 @@ export default class GameScene extends Phaser.Scene {
 			})
 		]);
 
+		const objs = [];
+
+		map.getObjectLayer("objects").objects.forEach(({ type, id, x, y }) => {
+			switch (type) {
+				case "door":
+					objs[id] = new Door({
+						scene: this,
+						x: x + 4,
+						y: y + 4
+					});
+					break;
+
+				default:
+					break;
+			}
+		});
+
+		map
+			.getObjectLayer("objects")
+			.objects.forEach(({ type, properties, id }) => {
+				switch (type) {
+					case "door":
+						objs[id].exit = objs[getProperty(properties, "exit")];
+						break;
+
+					default:
+						break;
+				}
+			});
+
 		this.lights.enable();
 
-		this.target = this.physics.add.image(100, 100);
+		this.target = this.add.image(100, 100);
 		this.cameras.main.setZoom(5).startFollow(this.target, false);
 	}
 

@@ -6,7 +6,10 @@ const game = new Phaser.Game({
 	height: 480,
 	backgroundColor: 0x222323,
 	physics: {
-		default: "arcade"
+		default: "arcade",
+		arcade: {
+			// debug: true
+		}
 	},
 	render: {
 		pixelArt: true,
