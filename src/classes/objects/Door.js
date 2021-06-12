@@ -37,6 +37,7 @@ export default class Door extends Phaser.Physics.Arcade.Image {
 				this.exit.x + obj.body.velocity.x / 4,
 				this.exit.y + obj.body.velocity.y / 4
 			);
+			this.scene.playSound("enterRoom");
 		}
 	};
 }
