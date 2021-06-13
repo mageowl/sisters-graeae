@@ -120,7 +120,7 @@ export default class Sister extends Phaser.GameObjects.Container {
 
 			if (this.switchEyeNxt) {
 				let nxtID = (this.id + 1) % 3;
-				let prevID = (this.id - 1) % 3;
+				let prevID = Phaser.Math.Wrap(this.id - 1, 0, 2);
 				if (
 					Phaser.Math.Distance.BetweenPoints(Sister.instances[nxtID], this) < 60
 				) {
