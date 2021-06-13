@@ -1,6 +1,6 @@
 import GameScene from "./classes/scenes/GameScene.js";
 import MenuScene from "./classes/scenes/MenuScene.js";
-import createPrescriptedScene from "./classes/scenes/PrescriptedScene.js";
+import ZeusPrescript from "./classes/scenes/ZeusPrescript.js";
 
 const game = new Phaser.Game({
 	type: Phaser.AUTO,
@@ -20,28 +20,5 @@ const game = new Phaser.Game({
 	loader: {
 		baseURL: "../../../assets"
 	},
-	scene: [
-		MenuScene,
-		createPrescriptedScene("zeus", {
-			images: [{ key: "zeus", url: "sprites/zeus.png" }],
-			sprites: [{ key: "zeus", x: 10, y: 30 }],
-			bgImage: "sprites/title-bg.png",
-			actions: [
-				{
-					type: "dialog",
-					text: "Hello World",
-					speaker: "Coder"
-				},
-				{
-					type: "move",
-					sprite: "zeus",
-					time: 1000,
-					x: 30,
-					y: 40
-				}
-			],
-			next: "game"
-		}),
-		GameScene
-	]
+	scene: [MenuScene, ZeusPrescript, GameScene]
 });
