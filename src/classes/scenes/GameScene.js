@@ -281,6 +281,13 @@ export default class GameScene extends Phaser.Scene {
 			this.sound.add("hmm1"),
 			this.sound.add("hmm2")
 		);
+
+		this.time.addEvent({
+			delay: 300000,
+			callback: () => {
+				this.scene.start("lose");
+			}
+		});
 	}
 
 	update() {
