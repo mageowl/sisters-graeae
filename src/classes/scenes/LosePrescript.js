@@ -25,17 +25,17 @@ export default createPrescriptedScene("lose", {
       y: 195,
     },
     {
-      type: "dialog",
-      text: "Perseus: I have your eye.",
-      speaker: "",
-      y: 260,
-    },
-    {
       type: "move",
       sprite: "perseus",
       time: 1000,
       x: 80,
       y: 70,
+    },
+    {
+      type: "dialog",
+      text: "Perseus: I have your eye.",
+      speaker: "",
+      y: 260,
     },
     {
       type: "dialog",
