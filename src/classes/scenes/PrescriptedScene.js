@@ -21,7 +21,7 @@ class PrescriptedScene extends Phaser.Scene {
 	}
 
 	create() {
-		this.add.image(0, 0, "background").setOrigin(0);
+		this.add.image(0, 0, `background-${this.id}`).setOrigin(0);
 
 		this.script.sprites.forEach(({ name, key, x, y }) => {
 			this.sprites[name ?? key] = this.physics.add.sprite(x, y, key);
