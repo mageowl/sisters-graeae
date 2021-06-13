@@ -1,4 +1,5 @@
 import { getProperty } from "../../util.js";
+import Chest from "../objects/Chest.js";
 import Door from "../objects/Door.js";
 import Sister from "../objects/Sister.js";
 import Spider from "../objects/Spider.js";
@@ -31,6 +32,10 @@ export default class GameScene extends Phaser.Scene {
 
 	preload() {
 		this.load.spritesheet("sister", "sprites/sister.png", {
+			frameWidth: 8,
+			frameHeight: 8
+		});
+		this.load.spritesheet("chest", "sprites/chest.png", {
 			frameWidth: 8,
 			frameHeight: 8
 		});
@@ -133,6 +138,15 @@ export default class GameScene extends Phaser.Scene {
 						})
 					);
 					break;
+
+				case "chest":
+					this.container.add(
+						new Chest({
+							scene: this,
+							x,
+							y
+						})
+					);
 
 				default:
 					break;
