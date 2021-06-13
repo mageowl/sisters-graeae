@@ -36,6 +36,42 @@ export default createPrescriptedScene("win", {
       type: "wait",
       delay: 3000,
     },
+    {
+      type: "move",
+      sprite: "sis0",
+      time: 300,
+      x: 80,
+      y: 0,
+    },
+    {
+      type: "move",
+      sprite: "sis1",
+      time: 300,
+      x: 80,
+      y: 0,
+    },
+    {
+      type: "move",
+      sprite: "sis2",
+      time: 300,
+      x: 80,
+      y: 0,
+    },
+    {
+      type: "wait",
+      delay: 2000,
+    },
+    {
+      type: "move",
+      sprite: "perseus",
+      time: 1000,
+      x: 80,
+      y: 70,
+    },
+    {
+      type: "wait",
+      delay: 3000,
+    },
   ],
   next: "menu",
 });
