@@ -58,7 +58,10 @@ class PrescriptedScene extends Phaser.Scene {
 					);
 					this.time.addEvent({
 						delay: act.time,
-						callback: this.nextAction
+						callback: () => {
+							this.sprites[act.sprite].body.stop();
+							this.nextAction();
+						}
 					});
 					break;
 
