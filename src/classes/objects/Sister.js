@@ -56,22 +56,22 @@ export default class Sister extends Phaser.GameObjects.Container {
 	 * @memberof Sister
 	 */
 	constructor(config) {
-		const light = config.scene.lights.addLight(0, 0, 50, 0xffffff, 1.1);
+		const light = config.scene.lights.addLight(0, 0, 72, 0xffffff, 1.1);
 		const sprite = config.scene.add
-			.sprite(0, 0, "sister")
+			.sprite(0, -1, "sister")
 			.setPipeline("Light2D");
 		const bar = config.scene.add
-			.rectangle(0, -6, 8, 1, [0x3245bf, 0xab492e, 0x2a6339][Sister.count])
+			.rectangle(0, -7, 8, 1, [0x3245bf, 0xab492e, 0x2a6339][Sister.count])
 			.setOrigin(0.5);
 		const patientice = config.scene.add
-			.rectangle(-4, -6, 8, 1, [0x6476e8, 0xfc6e47, 0x38ba5b][Sister.count])
+			.rectangle(-4, -7, 8, 1, [0x6476e8, 0xfc6e47, 0x38ba5b][Sister.count])
 			.setOrigin(0, 0.5);
-		const bubble = config.scene.add.sprite(0, -12, "bubble").setVisible(false);
+		const bubble = config.scene.add.sprite(0, -13, "bubble").setVisible(false);
 		const step = config.scene.add.particles("step");
 
 		super(config.scene, config.x, config.y, [sprite, bar, patientice, bubble]);
 
-		this.setSize(6, 8);
+		this.setSize(6, 6);
 
 		config.scene.add.existing(this);
 		config.scene.physics.world.enableBody(this);
@@ -111,7 +111,7 @@ export default class Sister extends Phaser.GameObjects.Container {
 		if (hasEye) {
 			if (Sister.eyed !== this) Sister.eyed = this;
 
-			this.obj.light.setIntensity(1).setRadius(50);
+			this.obj.light.setIntensity(1).setRadius(72);
 
 			this.body.setVelocity(
 				(input.D + -input.A) * Sister.SPEED,
