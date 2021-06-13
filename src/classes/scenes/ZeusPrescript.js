@@ -29,7 +29,7 @@ export default createPrescriptedScene("zeus", {
     },
     {
       type: "dialog",
-      text: "Pemphredo: Someone comes... can you see sister?",
+      text: "Someone comes... can you see sister?",
       speaker: "",
       y: 195,
     },
