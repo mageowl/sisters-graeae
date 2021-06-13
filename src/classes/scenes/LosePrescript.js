@@ -1,6 +1,6 @@
 import createPrescriptedScene from "./PrescriptedScene.js";
 
-export default createPrescriptedScene("win", {
+export default createPrescriptedScene("lose", {
   images: [
     { key: "zeus", url: "sprites/zeus.png" },
     { key: "perseus", url: "sprites/perseus.png" },
@@ -14,7 +14,7 @@ export default createPrescriptedScene("win", {
     { key: "sister-idle", name: "sis1", x: 80, y: 25 },
     { key: "sister-ne-idle", name: "sis2", x: 90, y: 25 },
   ],
-  bgImage: "sprites/end-bg.png",
+  bgImage: "sprites/lose-bg.png",
   actions: [
     {
       type: "wait",
