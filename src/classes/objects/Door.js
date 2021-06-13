@@ -11,6 +11,8 @@ export default class Door extends Phaser.Physics.Arcade.Image {
 	 */
 	exit;
 
+	win = false;
+
 	/**
 	 * Creates an instance of Door.
 	 * @param {object} config
@@ -26,6 +28,8 @@ export default class Door extends Phaser.Physics.Arcade.Image {
 		Sister.instances.forEach((sis) => {
 			config.scene.physics.add.overlap(sis, this, this.teleport);
 		});
+
+		this.win = config.win;
 
 		this.setSize(4, 4);
 	}
@@ -59,6 +63,9 @@ export default class Door extends Phaser.Physics.Arcade.Image {
 			if (Door.SPIDERS_IN_ROOM) {
 				this.scene.playSound("seeSpiders");
 			} else if (Math.random() > 0.6) this.scene.playSound("enterRoom");
+		} else if (this.win) {
+			this.scene.scene.start("win");
+			this.scene.scene.stop("ui");
 		}
 	};
 }

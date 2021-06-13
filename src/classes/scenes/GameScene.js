@@ -120,39 +120,42 @@ export default class GameScene extends Phaser.Scene {
 
 		const objs = [];
 
-		map.getObjectLayer("objects").objects.forEach(({ type, id, x, y }) => {
-			switch (type) {
-				case "door":
-					objs[id] = new Door({
-						scene: this,
-						x,
-						y
-					});
-					break;
-
-				case "spider":
-					this.container.add(
-						new Spider({
+		map
+			.getObjectLayer("objects")
+			.objects.forEach(({ type, id, x, y, properties }) => {
+				switch (type) {
+					case "door":
+						objs[id] = new Door({
 							scene: this,
 							x,
-							y
-						})
-					);
-					break;
+							y,
+							win: getProperty(properties, "win")
+						});
+						break;
 
-				case "chest":
-					this.container.add(
-						new Chest({
-							scene: this,
-							x,
-							y
-						})
-					);
+					case "spider":
+						this.container.add(
+							new Spider({
+								scene: this,
+								x,
+								y
+							})
+						);
+						break;
 
-				default:
-					break;
-			}
-		});
+					case "chest":
+						this.container.add(
+							new Chest({
+								scene: this,
+								x,
+								y
+							})
+						);
+
+					default:
+						break;
+				}
+			});
 
 		map
 			.getObjectLayer("objects")
