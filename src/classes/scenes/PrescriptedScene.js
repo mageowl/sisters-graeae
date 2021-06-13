@@ -65,6 +65,11 @@ class PrescriptedScene extends Phaser.Scene {
           });
           break;
 
+        case "rotate":
+          this.sprites[act.sprite].setRotation(act.rot);
+          this.nextAction();
+          break;
+
         case "dialog":
           this.dialog = this.add
             .text(400, act.y, act.speaker + "\n" + act.text)
