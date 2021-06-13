@@ -132,7 +132,6 @@ export default class Sister extends Phaser.GameObjects.Container {
         this.switchEyeNxt = false;
         this.scene.playSound("getsEye");
       }
-      w;
 
       // Make them always follow
       Sister.instances.forEach((sis) => {
