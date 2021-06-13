@@ -3,6 +3,7 @@ import Chest from "../objects/Chest.js";
 import Door from "../objects/Door.js";
 import Sister from "../objects/Sister.js";
 import Spider from "../objects/Spider.js";
+import UIScene from "./UIScene.js";
 
 export default class GameScene extends Phaser.Scene {
 	updates = [];
@@ -282,12 +283,7 @@ export default class GameScene extends Phaser.Scene {
 			this.sound.add("hmm2")
 		);
 
-		this.time.addEvent({
-			delay: 300000,
-			callback: () => {
-				this.scene.start("lose");
-			}
-		});
+		this.scene.add("ui", UIScene, true);
 	}
 
 	update() {
