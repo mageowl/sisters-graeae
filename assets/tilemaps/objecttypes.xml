@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objecttypes>
+ <objecttype name="door" color="#b86057">
+  <property name="exit" type="object" default="0"/>
+ </objecttype>
+ <objecttype name="spider" color="#b3000a"/>
+</objecttypes>
