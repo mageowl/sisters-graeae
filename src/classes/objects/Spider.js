@@ -22,6 +22,9 @@ export default class Spider extends Phaser.Physics.Arcade.Sprite {
 
 		eventBoard.on("checkspiders", this.checkSpiders);
 
+		this.big = config.big;
+		if (this.big) this.setScale(2);
+
 		this.setPipeline("Light2D");
 	}
 
@@ -57,6 +60,10 @@ export default class Spider extends Phaser.Physics.Arcade.Sprite {
 					} else {
 						sis.patientice -= 50;
 						sis.obj.sprite.setTint(0xff0000);
+						if (this.big) {
+							this.scene.sounds.bg2.stop();
+							this.scene.playSound("wilhelm");
+						}
 						this.setVelocity(
 							Math.cos(angle) * -Spider.SPEED * 50,
 							Math.sin(angle) * -Spider.SPEED * 50
@@ -84,6 +91,9 @@ export default class Spider extends Phaser.Physics.Arcade.Sprite {
 			!this.dead
 		) {
 			Door.SPIDERS_IN_ROOM = true;
+			if (this.big) {
+				this.scene.sounds.bg2.play({ volume: 0.5 });
+			}
 		}
 	};
 }

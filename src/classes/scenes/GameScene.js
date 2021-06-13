@@ -23,7 +23,8 @@ export default class GameScene extends Phaser.Scene {
 		seeSpiders: [],
 		getsEye: [],
 		lowPatientice: [],
-		noise: []
+		noise: [],
+		wilhelm: []
 	};
 	soundPlaying = false;
 
@@ -75,6 +76,7 @@ export default class GameScene extends Phaser.Scene {
 		this.load.audio("out-of-my-way", ["sounds/out-of-my-way.m4a"]);
 		this.load.audio("over-here", ["sounds/over-here.m4a"]);
 		this.load.audio("scream-its-you", ["sounds/scream-its-you.m4a"]);
+		this.load.audio("scream-wilhelm", ["sounds/scream-wilhelm.mp3"]);
 		this.load.audio("scream1", ["sounds/scream1.m4a"]);
 		this.load.audio("scream2", ["sounds/scream2.m4a"]);
 		this.load.audio("secret-backdoor", ["sounds/secret-backdoor.m4a"]);
@@ -143,6 +145,17 @@ export default class GameScene extends Phaser.Scene {
 						);
 						break;
 
+					case "spiderbig":
+						this.container.add(
+							new Spider({
+								scene: this,
+								x,
+								y,
+								big: true
+							})
+						);
+						break;
+
 					case "chest":
 						this.container.add(
 							new Chest({
@@ -198,7 +211,8 @@ export default class GameScene extends Phaser.Scene {
 		this.cameras.main.setZoom(5).startFollow(this.target, false);
 
 		// CATEGORIZE SOUNDS
-		this.sound.add("background-1").play({ volume: 0.15 });
+		this.sounds.bg1 = this.sound.add("background-1").play({ volume: 0.15 });
+		this.sounds.bg2 = this.sound.add("background-2");
 
 		this.sounds.random.push(
 			this.sound.add("are-you-sure"),
@@ -285,6 +299,8 @@ export default class GameScene extends Phaser.Scene {
 			this.sound.add("hmm1"),
 			this.sound.add("hmm2")
 		);
+
+		this.sounds.wilhelm.push(this.sound.add("scream-wilhelm"));
 
 		this.scene.add("ui", UIScene, true);
 	}
