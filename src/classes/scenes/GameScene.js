@@ -50,6 +50,7 @@ export default class GameScene extends Phaser.Scene {
 
 		// LOAD SOUNDS
 		this.load.audio("background-1", ["sounds/background-1.mp3"]);
+		this.load.audio("background-2", ["sounds/background-2.mp3"]);
 		this.load.audio("ah-ha", ["sounds/ah-ha.m4a"]);
 		this.load.audio("are-you-sure", ["sounds/are-you-sure.m4a"]);
 		this.load.audio("bathroom", ["sounds/bathroom.m4a"]);
