@@ -57,6 +57,12 @@ export default class Spider extends Phaser.Physics.Arcade.Sprite {
 					if (sis.kicking) {
 						this.setVelocity((this.x - sis.x) * 10, -50).setGravity(0, 100);
 						this.deathTimer = 30;
+						if (this.big) {
+							this.scene.sound.stopAll();
+							this.scene.soundPlaying = false;
+							this.scene.playSound("wilhelm");
+							this.scene.sounds.bg2.stop();
+						}
 					} else {
 						sis.patientice -= 50;
 						if (sis.patientice === 0) {
@@ -64,12 +70,6 @@ export default class Spider extends Phaser.Physics.Arcade.Sprite {
 							this.scene.stop("gui");
 						}
 						sis.obj.sprite.setTint(0xff0000);
-						if (this.big) {
-							this.scene.sound.stopAll();
-							this.scene.soundPlaying = false;
-							this.scene.playSound("wilhelm");
-							this.scene.sounds.bg2.stop();
-						}
 						this.setVelocity(
 							Math.cos(angle) * -Spider.SPEED * 50,
 							Math.sin(angle) * -Spider.SPEED * 50
