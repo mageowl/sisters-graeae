@@ -94,10 +94,10 @@ export default class Sister extends Phaser.GameObjects.Container {
 			frequency: 200
 		});
 
-		this.keys = config.scene.input.keyboard.addKeys("W,A,S,D,E,space");
+		this.keys = config.scene.input.keyboard.addKeys("W,A,S,D,E,space,shift");
 		this.id = Sister.count++;
 		this.keys.space.on("down", this.switchEye);
-		config.scene.input.on("pointerdown", this.kick);
+		this.keys.shift.on("down", this.kick);
 	}
 
 	update() {
