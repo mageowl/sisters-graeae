@@ -42,7 +42,6 @@ export default class Door extends Phaser.Physics.Arcade.Image {
 						Phaser.Math.Distance.BetweenPoints(obj, sis) <= 50 &&
 						sis.id !== Sister.eye
 					) {
-						console.log(sis);
 						sis.setPosition(
 							this.exit.x + Math.sign(obj.body.velocity.x) * 10,
 							this.exit.y + Math.sign(obj.body.velocity.y) * 10
