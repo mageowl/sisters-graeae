@@ -12,7 +12,7 @@ export default class Door extends Phaser.Physics.Arcade.Image {
 	exit;
 
 	/**
-	 * Creates an instance of Sister.
+	 * Creates an instance of Door.
 	 * @param {object} config
 	 * @param {Phaser.Scene} config.scene
 	 * @memberof Sister
