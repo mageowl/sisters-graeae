@@ -5,6 +5,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Sisters Graeae</title>
 		<style>
+			@import url(./assets/webfont/stylesheet.css);
+
 			body {
 				margin: 0;
 				background-color: #000; /* 222323 */
@@ -14,9 +16,16 @@
 				display: block;
 				margin: 20% auto;
 			}
+
+			.font-loader {
+				font-family: Zepto;
+				position: absolute;
+				left: -1000px;
+			}
 		</style>
 	</head>
 	<body>
+		<div id="font-loader"></div>
 		<script src="https://cdn.jsdelivr.net/npm/phaser-raycaster@0.9.3/dist/phaser-raycaster.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/phaser@3.54.0/dist/phaser-arcade-physics.min.js"></script>
 		<script src="src/main.js" type="module"></script>

@@ -28,7 +28,7 @@ export default class MenuScene extends Phaser.Scene {
 		this.pointerLight = this.lights.addLight(400, 20, 200, 0xffffff, 2);
 
 		this.input.keyboard.on("keydown", () => {
-			this.scene.start("game");
+			this.scene.start("zeus");
 		});
 	}
 
