@@ -9,9 +9,9 @@ export default createPrescriptedScene("win", {
   ],
   sprites: [
     { key: "perseus", x: 80, y: 100 },
-    { key: "sister-ne-idle", name: "sis0", x: 70, y: 80 },
-    { key: "sister-idle", name: "sis1", x: 80, y: 80 },
-    { key: "sister-ne-idle", name: "sis2", x: 90, y: 80 },
+    { key: "sister-ne-idle", name: "sis0", x: 70, y: 70 },
+    { key: "sister-idle", name: "sis1", x: 80, y: 70 },
+    { key: "sister-ne-idle", name: "sis2", x: 90, y: 70 },
   ],
   bgImage: "sprites/end-bg.png",
   actions: [
@@ -40,21 +40,21 @@ export default createPrescriptedScene("win", {
       sprite: "sis0",
       time: 300,
       x: 200,
-      y: 80,
+      y: 70,
     },
     {
       type: "move",
       sprite: "sis1",
       time: 300,
       x: 200,
-      y: 80,
+      y: 70,
     },
     {
       type: "move",
       sprite: "sis2",
       time: 300,
       x: 200,
-      y: 80,
+      y: 70,
     },
     {
       type: "wait",
